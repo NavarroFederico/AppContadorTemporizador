@@ -23,5 +23,7 @@ class MainViewModel : ViewModel() {
         }.launchIn(viewModelScope)//este flow lo voy a estar emitiendo en el viewModelScope
     }
 
+    private fun startTimer() {
 
+    }
 }
