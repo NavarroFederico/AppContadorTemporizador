@@ -2,6 +2,7 @@ package com.example.appcuentaregresiva.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.appcuentaregresiva.databinding.ActivityMainBinding
@@ -32,6 +33,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.maxProgress.collect {
                 binding.circularProgressIndicator.max = it
+            }
+        }
+        //toastcontador
+        lifecycleScope.launchWhenStarted {
+            viewModel.startingCount.collect{
+                Toast.makeText(this@MainActivity,it.toString(),Toast.LENGTH_SHORT).show()
             }
         }
         //deshabilitar los botones cuando el contador este running y setear a 100 elcirculo de progreso
@@ -67,6 +74,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
 
     }
 }
