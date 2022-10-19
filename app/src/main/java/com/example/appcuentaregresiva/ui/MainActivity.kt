@@ -22,19 +22,35 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.btnPlus.setOnClickListener {
-                viewModel.increaseTime()
+            viewModel.increaseTime()
         }
         binding.btnStart.setOnClickListener {
-                viewModel.displayStartingCount()
+            viewModel.displayStartingCount()
         }
 
         //asignacion del progreso maximo al indicador max en el layout
         lifecycleScope.launchWhenStarted {
-            viewModel.maxProgress.collect{
+            viewModel.maxProgress.collect {
                 binding.circularProgressIndicator.max = it
             }
         }
+        //deshabilitar los botones cuando el contador este running y setear a 100 elcirculo de progreso
+        lifecycleScope.launchWhenStarted {
+            viewModel.isRunning.collect() { isRunning ->
+                if (isRunning) {
+                    binding.btnPlus.isEnabled = false
+                    binding.btnMinus.isEnabled = false
+                    binding.btnStart.isEnabled = false
+                } else {
+                    binding.btnPlus.isEnabled = true
+                    binding.btnMinus.isEnabled = true
+                    binding.btnStart.isEnabled = true
 
+                    binding.circularProgressIndicator.max = 100
+                    binding.circularProgressIndicator.progress = 100
+                }
+            }
+        }
 
     }
 }
