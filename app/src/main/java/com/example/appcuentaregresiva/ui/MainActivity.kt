@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     binding.btnPlus.isEnabled = true
                     binding.btnMinus.isEnabled = true
-                    binding.btnStart.isEnabled = true
+
 
                     binding.circularProgressIndicator.max = 100
                     binding.circularProgressIndicator.progress = 100
