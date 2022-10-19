@@ -54,6 +54,10 @@ class MainViewModel : ViewModel() {
             delay(1000)
         }.launchIn(viewModelScope)
     }
+    fun restartTimer(){
+        _isRunning.value = false
+        _time.value = 0
+    }
 }
 
 

@@ -25,10 +25,15 @@ class MainActivity : AppCompatActivity() {
                 viewModel.increaseTime()
         }
         binding.btnStart.setOnClickListener {
-
+                viewModel.displayStartingCount()
         }
 
-
+        //asignacion del progreso maximo al indicador max en el layout
+        lifecycleScope.launchWhenStarted {
+            viewModel.maxProgress.collect{
+                binding.circularProgressIndicator.max = it
+            }
+        }
 
 
     }
