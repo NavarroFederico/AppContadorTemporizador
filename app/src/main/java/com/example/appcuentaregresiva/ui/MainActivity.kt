@@ -51,6 +51,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        //que se actualice el valor del contador time en pantalla
+        lifecycleScope.launchWhenStarted {
+            viewModel.time.collect() { timeValue ->
+                binding.tvContador.text = timeValue.toString()
+
+                if (timeValue == 0) {
+                    viewModel.restartTimer()
+                }
+
+                if (!viewModel.isRunning.value){
+                    binding.btnStart.isEnabled = timeValue > 0
+                }else{
+                    binding.circularProgressIndicator.progress = timeValue
+                }
+            }
+        }
 
     }
 }
