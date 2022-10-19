@@ -57,6 +57,7 @@ class MainViewModel : ViewModel() {
     fun restartTimer(){
         _isRunning.value = false
         _time.value = 0
+        _maxProgress.value = 0
     }
 }
 
