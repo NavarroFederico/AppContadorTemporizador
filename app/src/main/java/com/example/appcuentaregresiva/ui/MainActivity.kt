@@ -2,14 +2,17 @@ package com.example.appcuentaregresiva.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.appcuentaregresiva.databinding.ActivityMainBinding
+
 import com.example.appcuentaregresiva.ui.viewmodels.MainViewModel
 import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainViewModel by viewModels()
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnMinus.setOnClickListener {
-
+            viewModel.decreaseTime()
         }
         binding.btnPlus.setOnClickListener {
             viewModel.increaseTime()
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnStart.setOnClickListener {
             viewModel.displayStartingCount()
         }
+
 
         //asignacion del progreso maximo al indicador max en el layout
         lifecycleScope.launchWhenStarted {
@@ -37,13 +41,14 @@ class MainActivity : AppCompatActivity() {
         }
         //toastcontador
         lifecycleScope.launchWhenStarted {
-            viewModel.startingCount.collect{
-                Toast.makeText(this@MainActivity,it.toString(),Toast.LENGTH_SHORT).show()
+            viewModel.startingCount.collect {
+                Toast.makeText(this@MainActivity, it.toString(), Toast.LENGTH_SHORT).show()
             }
         }
+
         //deshabilitar los botones cuando el contador este running y setear a 100 elcirculo de progreso
         lifecycleScope.launchWhenStarted {
-            viewModel.isRunning.collect() { isRunning ->
+            viewModel.isRunning.collect { isRunning ->
                 if (isRunning) {
                     binding.btnPlus.isEnabled = false
                     binding.btnMinus.isEnabled = false
@@ -55,27 +60,26 @@ class MainActivity : AppCompatActivity() {
 
                     binding.circularProgressIndicator.max = 100
                     binding.circularProgressIndicator.progress = 100
+
                 }
             }
         }
         //que se actualice el valor del contador time en pantalla
         lifecycleScope.launchWhenStarted {
-            viewModel.time.collect() { timeValue ->
+            viewModel.time.collect { timeValue ->
                 binding.tvContador.text = timeValue.toString()
 
                 if (timeValue == 0) {
                     viewModel.restartTimer()
                 }
 
-                if (!viewModel.isRunning.value){
+                if (!viewModel.isRunning.value) {
                     binding.btnStart.isEnabled = timeValue > 0
-                }else{
+
+                } else {
                     binding.circularProgressIndicator.progress = timeValue
                 }
             }
         }
-
-
-
     }
 }

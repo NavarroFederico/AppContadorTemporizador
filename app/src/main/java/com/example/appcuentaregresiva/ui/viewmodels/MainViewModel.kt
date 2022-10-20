@@ -54,10 +54,12 @@ class MainViewModel : ViewModel() {
             delay(1000)
         }.launchIn(viewModelScope)
     }
-    fun restartTimer(){
+
+    fun restartTimer() {
         _isRunning.value = false
         _time.value = 0
-        _maxProgress.value = 0
+       _maxProgress.value = 0
+
     }
 }
 

@@ -53,6 +53,7 @@
         android:layout_width="144dp"
         android:layout_height="wrap_content"
         android:progress="100"
+
         app:indicatorSize="180dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
